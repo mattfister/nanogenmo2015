@@ -33,3 +33,5 @@ class Person:
     def add_history(happening):
         self.history.append(happening)
 
+    def get_name(self):
+        return random.choice([self.full_name, self.first_name, self.first_name + ' the ' + random.choice(self.qualities)]);
