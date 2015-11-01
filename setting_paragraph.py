@@ -48,8 +48,8 @@ class Paragraph:
         print self.props
 
         self.known_props = []
-
-        print self.setting_sentence(self.chars, self.setting)
+        md_writer.print_chapter_heading('The ' + self.setting.title())
+        md_writer.print_chapter_sentence(self.setting_sentence(self.chars, self.setting))
 
         for i in range(10):
             if random.random() < 0.5:
@@ -62,3 +62,5 @@ class Paragraph:
                         print md_writer.print_chapter_sentence(generate_concept_sentence.generate_concept_sentence(random.choice((random.choice(self.chars).first_name, None)), random.choice(self.known_props)))
                     except Exception:
                         continue
+
+        md_writer.end_chapter()

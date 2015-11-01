@@ -53,6 +53,13 @@ def capable_of_sentence(concept, subject, person=None):
         sentence = person + ' could tell the ' + concept + ' could ' + subject + "."
     return sentence
 
+def capable_of_sentence(concept, subject, person=None):
+    if person == None:
+        sentence = "The " + concept + " could " + subject + "."
+    else:
+        sentence = person + ' could tell the ' + concept + ' could cause a ' + subject + "."
+    return sentence
+
 
 def generate_concept_sentence(person, concept, relation):
     pass
@@ -82,6 +89,8 @@ def generate_concept_sentence(person, concept):
         sentence = used_for_sentence(concept_part, subject_part, person)
     elif relation == 'CapableOf':
         sentence = capable_of_sentence(concept_part, subject_part, person)
+    elif relation == 'Causes':
+        sentence = causes_sentence(concept_part, subject_part, person)
     return sentence
 
 if __name__ == '__main__':

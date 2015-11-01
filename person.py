@@ -15,15 +15,10 @@ def generate_quality():
         except Exception:
             continue
 
-
 class Person:
     
     def __init__(self):
-        choice = random.random()
-        if choice < 0.9:
-            self.full_name = names.get(random.choice(["male", "female"]))
-        else:
-            self.full_name = words.get_celeb()
+        self.full_name = names.get(random.choice(["male", "female"]))
 
         self.first_name = self.full_name.split(' ')[0]
         if len(self.full_name.split(' ')[0]) > 1:

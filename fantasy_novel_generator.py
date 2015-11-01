@@ -5,9 +5,11 @@ from person import Person
 from wordtools import conceptnet_searcher
 
 import sys
-
+from wordtools import md_writer
 
 names = names.Names()
+words = wordLists.WordLists()
+
 words = wordLists.WordLists()
 
 def generate_character():
@@ -28,11 +30,19 @@ def generate_setting():
             print sys.exc_info()[0]
             continue
 
+def generate_title():
+    title = 'The ' + words.get_adj().title() + " " + random.choice(["Legend", "Tale", "Story", "Adventure"]) + " of " \
+            + random.choice(["Glory", "Heroes", "Ages"])
+    md_writer.print_title(title)
+
 def generate_novel():
+    generate_title()
     characters = [Person(), Person(), Person()]
-    setting = generate_setting()
-    paragraph = Paragraph(characters, setting)
-    paragraph.generate_sentences()
+    for i in range(30):
+        setting = generate_setting()
+        paragraph = Paragraph(characters, setting)
+        paragraph.generate_sentences()
 
 if __name__ == '__main__':
     generate_novel()
+    md_writer.end_novel()
