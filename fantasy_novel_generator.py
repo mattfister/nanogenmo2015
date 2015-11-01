@@ -1,6 +1,6 @@
 import random
 from wordtools import wordLists, names
-from paragraph import Paragraph
+from setting_paragraph import Paragraph
 from person import Person
 from wordtools import conceptnet_searcher
 
