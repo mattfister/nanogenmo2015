@@ -22,12 +22,12 @@ class Person:
 
         self.first_name = self.full_name.split(' ')[0]
         if len(self.full_name.split(' ')[0]) > 1:
-            self.last_name  = self.full_name.split(' ')[1]
+            self.last_name = self.full_name.split(' ')[1]
             
         else:
             self.last_name = ""
 
-        self.qualities = (generate_quality(), generate_quality(), generate_quality())
+        self.qualities = [generate_quality()]
         self.history = []
 
     def add_history(happening):

@@ -10,7 +10,6 @@ class Paragraph:
 
     def __init__(self, state):
         self.state = state
-        self.topic = ""
         self.words = wordLists.WordLists()
 
     def setting_sentence(self, state):
@@ -28,7 +27,6 @@ class Paragraph:
         return sentence
 
     def generate_sentences(self):
-        md_writer.print_chapter_heading('The ' + self.state.get_current_setting().get_name().title())
         md_writer.print_chapter_sentence(self.setting_sentence(self.state))
 
         for i in range(10):
