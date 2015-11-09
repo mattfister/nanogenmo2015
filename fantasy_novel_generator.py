@@ -16,6 +16,7 @@ def generate_title():
             + random.choice(["Glory", "Heroes", "Ages"])
     md_writer.print_title(title)
 
+
 def generate_novel():
     generate_title()
     state = FantasyNovelState()
