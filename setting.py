@@ -76,4 +76,4 @@ class Setting:
         return random.choice(['The wind blew gently through the ' + self.get_name() + '.',
                               'A rustling sound was heard in the distance.',
                               'A sudden chill fell over the ' + self.get_name() + '.',
-                              'The ' + self.get_name(self) + ' seemed more sinister all of a sudden.'])
+                              'The ' + self.get_name() + ' seemed more sinister all of a sudden.'])

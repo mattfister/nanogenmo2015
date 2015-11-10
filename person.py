@@ -48,7 +48,7 @@ class Person:
         for i in range(5):
             topic = random.choice(['traveling', 'camping', 'hunting', 'fishing' 'searching for food', 'fighting'])
             relation = random.choice(['father', 'mother', 'sister', 'brother', 'best friend', 'rival'])
-            when = random.choice(['as a child', 'when ' + self.pronoun + 'was a teenager', 'after leaving ' + self.possessive_pronoun + ' home'])
+            when = random.choice(['as a child', 'when ' + self.pronoun + ' was a teenager', 'after leaving ' + self.possessive_pronoun + ' home'])
             self.add_memory(topic, self.get_name() + ' remembered ' + topic + ' with ' + self.possessive_pronoun + ' ' + relation + ' ' + when + '.')
 
     def get_pronoun(self):
