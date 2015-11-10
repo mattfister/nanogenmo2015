@@ -29,13 +29,13 @@ class FoodParagraph(Paragraph):
         if c.challenge('survival'):
             md_writer.print_chapter_sentence(c.get_name() + ' followed the tracks, staying upwind so as not to alert the ' + animal + '.')
         else:
-            md_writer.print_chapter_sentence(c.get_name() + ' followed the tracks, but the ' + animal + ' noticed ' + c.get_pronoun() + ' and ran.')
+            md_writer.print_chapter_sentence(c.get_name() + ' followed the tracks, but the ' + animal + ' noticed ' + c.get_possessive_pronoun() + ' and ran.')
             return 0
 
         if random.random() < 0.05:
             md_writer.print_chapter_sentence(self.state.get_current_setting().mood_sentence())
 
-        md_writer.print_chapter_sentence(c.get_pronoun().title() + ' aimed ' + c.get_possessive_pronoun() + ' at the ' + animal + ' and fired.')
+        md_writer.print_chapter_sentence(c.get_pronoun().title() + ' aimed ' + c.get_possessive_pronoun() + ' bow at the ' + animal + ' and fired.')
         if c.challenge('survival'):
             md_writer.print_chapter_sentence(c.get_pronoun().title() + ' hit ' + c.get_possessive_pronoun() + ' target.')
         else:

@@ -50,9 +50,9 @@ class SettingParagraph(Paragraph):
 
         for i in range(10):
             r = random.random()
-            if r < 0.1 and self.state.get_current_setting().has_more_lore():
+            if r < 0.2 and self.state.get_current_setting().has_more_lore():
                 md_writer.print_chapter_sentence(self.generate_lore_sentence(self.state))
-            elif r < 0.2:
+            elif r < 0.3:
                 md_writer.print_chapter_sentence(self.state.generate_status_sentence())
             elif r < 0.5:
                 md_writer.print_chapter_sentence(generate_concept_sentence.generate_concept_sentence(random.choice((random.choice(self.state.get_characters()).first_name, None)), self.state.get_current_setting().get_name()))

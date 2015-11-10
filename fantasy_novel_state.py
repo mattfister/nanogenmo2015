@@ -79,8 +79,53 @@ class FantasyNovelState:
         else:
             return says_sentence(c, random.choice(no_food_sentences))
 
+    def generate_energy_sentence(self, c):
+        high_energy_sentences = ['',
+                               'We should keep moving, before we get tired',
+                               'I feel refreshed',
+                               "I feel energized",
+                               "Let's hurry"]
+        medium_energy_sentences = ["Let's keep moving",
+                                 "I'm not tired yet",
+                                 "We should keep going for a while",
+                                 "Let's not camp yet"]
+        low_energy_sentences = ["I'm getting tired",
+                              "We should make camp soon",
+                              "You're looking tired",
+                              "I'm feeling rather sleepy"]
+        no_energy_sentences = ["I'm exhausted",
+                             "Let's make camp now",
+                             "We should find a suitable place to camp",
+                             "Let's take a break",
+                             "Argh! I'm so tired"]
+
+        if self.level(self.energy) == 'high':
+            return says_sentence(c, random.choice(high_energy_sentences))
+        elif self.level(self.energy) == 'medium':
+            return says_sentence(c, random.choice(medium_energy_sentences))
+        elif self.level(self.food) == 'low':
+            return says_sentence(c, random.choice(low_energy_sentences))
+        else:
+            return says_sentence(c, random.choice(no_energy_sentences))
+
     def generate_status_sentence(self):
-        return self.generate_food_sentence(random.choice(self.characters))
+        sentence_to_gen = random.choice([self.generate_food_sentence, self.generate_energy_sentence])
+        return sentence_to_gen(random.choice(self.characters))
 
     def add_food(self, food):
         self.food += food
+
+    def add_energy(self, energy):
+        self.energy += energy
+
+    def character_list(self):
+        sentence = ""
+        cs = self.get_characters()
+        random.shuffle(cs)
+        for i in range(len(cs)):
+            sentence += cs[i].get_name()
+            if i < len(cs) - 2:
+                sentence += ', '
+            elif i == len(cs) - 2:
+                sentence += ', and '
+        return sentence
