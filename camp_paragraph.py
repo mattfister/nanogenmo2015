@@ -47,7 +47,7 @@ class CampParagraph(Paragraph):
         if c3.challenge('survival'):
             sense = random.choice(['saw', 'heard', 'spotted', 'noticed', 'observed'])
             grouping = random.choice(['band', 'family', 'patrol'])
-            critter = random.choice(['deer', 'bear', 'wolf'] + self.words.fantasy_races)
+            critter = random.choice(self.words.fantasy_races)
             critter = pattern.en.pluralize(critter)
             md_writer.print_chapter_sentence(c3.get_pronoun().title() + ' ' + sense + ' a ' + grouping + ' of ' + critter + '.')
             watching_adj = random.choice(['quietly', 'patiently', 'tirelessly'])
@@ -58,8 +58,12 @@ class CampParagraph(Paragraph):
             md_writer.print_chapter_sentence('But the ' + critter + ' soon left the ' + self.state.get_current_setting().get_name() + '.')
             energy += 5
         else:
+            critter = random.choice(self.words.fantasy_races)
+            self.state.add_enemy_patrol(critter)
+            critter_description = c3.get_pronoun().title() + " thought " + c3.get_pronoun() + ' saw ' + pattern.en.pluralize(critter) + ' in the distance.'
+            md_writer.print_chapter_sentence(critter_description)
             failure = random.choice(['fell in a hidden gorge', 'loudly broke a branch', 'accidentally knocked over a boulder', 'fell asleep', 'walked into a tree'])
-            md_writer.print_chapter_sentence(c3.get_pronoun().title() + ' ' + failure + '.')
+            md_writer.print_chapter_sentence(c3.get_pronoun().title() + ' suddenly ' + failure + '.')
 
         night_description = random.choice(['inky', 'black', 'moonlit', 'silent', 'calm'])
         md_writer.print_chapter_sentence(night_description.title() + ' darkness fell over the camp.')

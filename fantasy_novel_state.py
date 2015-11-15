@@ -2,6 +2,7 @@ from person import Person
 from wordtools import wordLists
 from setting import Setting
 from says_sentence import says_sentence
+from npc import Npc
 import random
 words = wordLists.WordLists()
 
@@ -18,6 +19,7 @@ class FantasyNovelState:
 
         self.food = random.randint(0, 12)
         self.energy = random.randint(0, 12)
+        self.enemy_patrols = []
 
     def get_characters(self):
         return self.characters
@@ -49,6 +51,10 @@ class FantasyNovelState:
 
     def get_energy_level(self):
         return self.level(self.energy)
+
+    def add_enemy_patrol(self, race):
+        new_enemies = [Npc(race), Npc(race)]
+        self.enemy_patrols.append(new_enemies)
 
     def generate_food_sentence(self, c):
         high_food_sentences = ['We have a lot of food',

@@ -3,6 +3,7 @@ from wordtools import wordLists, names
 from wordtools import conceptnet_searcher
 from attribute import Attribute
 from wordtools import md_writer
+from weapon import Weapon
 
 names = names.Names()
 words = wordLists.WordLists()
@@ -50,6 +51,8 @@ class Person:
             relation = random.choice(['father', 'mother', 'sister', 'brother', 'best friend', 'rival'])
             when = random.choice(['as a child', 'when ' + self.pronoun + ' was a teenager', 'after leaving ' + self.possessive_pronoun + ' home'])
             self.add_memory(topic, self.get_name() + ' remembered ' + topic + ' with ' + self.possessive_pronoun + ' ' + relation + ' ' + when + '.')
+
+        self.weapon = Weapon()
 
     def get_pronoun(self):
         return self.pronoun
