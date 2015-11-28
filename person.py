@@ -4,6 +4,8 @@ from wordtools import conceptnet_searcher
 from attribute import Attribute
 from wordtools import md_writer
 from weapon import Weapon
+from injury import Injury
+from wordtools import aOrAn
 
 names = names.Names()
 words = wordLists.WordLists()
@@ -29,7 +31,7 @@ class Person:
             self.possessive_pronoun = 'his'
             self.pronoun = 'he'
 
-        self.full_name = names.get(random.choice(["male", "female"]))
+        self.full_name = names.get(self.gender)
 
         self.first_name = self.full_name.split(' ')[0]
         if len(self.full_name.split(' ')[0]) > 1:
@@ -53,6 +55,18 @@ class Person:
             self.add_memory(topic, self.get_name() + ' remembered ' + topic + ' with ' + self.possessive_pronoun + ' ' + relation + ' ' + when + '.')
 
         self.weapon = Weapon()
+        self.dead = False
+
+        self.injuries = []
+
+    def get_injuries(self):
+        return self.injuries
+
+    def is_dead(self):
+        return self.dead
+
+    def get_weapon(self):
+        return self.weapon
 
     def get_pronoun(self):
         return self.pronoun
@@ -78,6 +92,9 @@ class Person:
     def get_name(self):
         return random.choice([self.full_name, self.first_name, self.first_name + ' the ' + random.choice(self.qualities)]);
 
+    def get_description(self):
+        return self.get_name()
+
     def get_attribute(self, attribute_name):
         return self.attributes[attribute_name]
 
@@ -93,3 +110,9 @@ class Person:
         new_quality = words.get_negative_quality()
         md_writer.print_chapter_sentence('Because of this great failure ' + self.get_name() + " became known as 'The " + new_quality.title()+"'.")
         self.qualities = [new_quality]
+
+    def add_injury(self, cause):
+        if len(self.injuries) < 1:
+            self.injuries.append(Injury(self, cause))
+        else:
+            pass

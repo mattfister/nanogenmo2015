@@ -35,7 +35,7 @@ class SettingParagraph(Paragraph):
             elif i == len(cs) - 2:
                 sentence += ', and ' 
             else:
-                sentence += ' traveled to a ' + self.state.get_current_setting().get_name() + '.'
+                sentence += ' traveled to a ' + self.state.get_current_setting().get_description() + '.'
         return sentence
 
     def generate_lore_sentence(self, state):
@@ -58,7 +58,7 @@ class SettingParagraph(Paragraph):
                 md_writer.print_chapter_sentence(generate_concept_sentence.generate_concept_sentence(random.choice((random.choice(self.state.get_characters()).first_name, None)), self.state.get_current_setting().get_name()))
             else:
                 if len(self.state.get_current_setting().get_props()) > 0:
-                    md_writer.print_chapter_sentence(self.state.get_current_setting().discover_prop(random.choice((random.choice(self.state.get_characters()).first_name, None)), random.choice(self.state.get_current_setting().get_props()), self.state.get_current_setting().get_name()))
+                    md_writer.print_chapter_sentence(self.state.get_current_setting().discover_prop(random.choice((random.choice(self.state.get_characters()).first_name, None)), random.choice(self.state.get_current_setting().get_props()), self.state.get_current_setting().get_description()))
                 elif len(self.state.get_current_setting().get_known_props()) > 0:
                     try:
                         print md_writer.print_chapter_sentence(generate_concept_sentence.generate_concept_sentence(random.choice((random.choice(self.state.get_characters()).first_name, None)), random.choice(self.state.get_current_setting().get_known_props())))

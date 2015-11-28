@@ -10,6 +10,7 @@ words = wordLists.WordLists()
 class Setting:
 
     def generate_setting(self):
+        return words.get_fantasy_place()
         while True:
             setting = words.get_fantasy_place()
             try:
@@ -21,6 +22,8 @@ class Setting:
 
     def __init__(self):
         self.name = self.generate_setting()
+
+        self.adjective = words.get_place_adj()
 
         self.props = [i[1].replace('_', ' ') for i in conceptnet_searcher.get_concept_relations(self.name) if i[0] == 'HasA']
 
@@ -41,7 +44,7 @@ class Setting:
 
         self.danger = random.choice(['very dangerous', 'dangerous', 'safe'])
 
-        self.lore_facts = ["This place was once known as '" + self.old_name + "'",
+        self.lore_facts = ["This place was once known as *" + self.old_name + "*",
                            self.race.title() + " " + self.occupation + " once ruled this place",
                            "This is a " + self.danger + " " + random.choice(["place", self.name])]
         random.shuffle(self.lore_facts)
@@ -54,6 +57,9 @@ class Setting:
 
     def get_name(self):
         return self.name
+
+    def get_description(self):
+        return random.choice([self.name, self.adjective + ' ' + self.name])
 
     def get_old_name(self):
         return self.old_name

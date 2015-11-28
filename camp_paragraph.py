@@ -1,8 +1,10 @@
 from paragraph import Paragraph
 from wordtools import md_writer
+from wordtools import aOrAn
+from npc import Npc
 import random
 import pattern.en
-
+import copy
 
 class CampParagraph(Paragraph):
 
@@ -47,9 +49,12 @@ class CampParagraph(Paragraph):
         if c3.challenge('survival'):
             sense = random.choice(['saw', 'heard', 'spotted', 'noticed', 'observed'])
             grouping = random.choice(['band', 'family', 'patrol'])
-            critter = random.choice(self.words.fantasy_races)
+            race = random.choice(self.words.fantasy_races)
+            critter = copy.copy(race)
             critter = pattern.en.pluralize(critter)
             md_writer.print_chapter_sentence(c3.get_pronoun().title() + ' ' + sense + ' a ' + grouping + ' of ' + critter + '.')
+            characteristic = Npc(race).characteristic
+            md_writer.print_chapter_sentence('One of the ' + critter + ' had ' + aOrAn.aOrAn(characteristic) + " " + characteristic + ".")
             watching_adj = random.choice(['quietly', 'patiently', 'tirelessly'])
             md_writer.print_chapter_sentence(c3.get_pronoun().title() + ' ' + watching_adj + ' watched the ' + critter +'.')
             if (len(self.state.get_current_setting().get_known_props()) > 0):
@@ -63,7 +68,7 @@ class CampParagraph(Paragraph):
             critter_description = c3.get_pronoun().title() + " thought " + c3.get_pronoun() + ' saw ' + pattern.en.pluralize(critter) + ' in the distance.'
             md_writer.print_chapter_sentence(critter_description)
             failure = random.choice(['fell in a hidden gorge', 'loudly broke a branch', 'accidentally knocked over a boulder', 'fell asleep', 'walked into a tree'])
-            md_writer.print_chapter_sentence(c3.get_pronoun().title() + ' suddenly ' + failure + '.')
+            md_writer.print_chapter_sentence("Suddenly, " + c3.get_pronoun() + " " + failure + '.')
 
         night_description = random.choice(['inky', 'black', 'moonlit', 'silent', 'calm'])
         md_writer.print_chapter_sentence(night_description.title() + ' darkness fell over the camp.')

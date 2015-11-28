@@ -5,7 +5,7 @@ from wordtools import aOrAn
 
 all_relations = ('RelatedTo', 'IsA', 'PartOf', 'MemberOf', 'HasA', 'UsedFor', 'CapableOf', 'AtLocation', 'Causes', 'HasSubevent', 'HasFirstSubevent', 'HasLastSubevent', 'HasPrerequisite', 'HasProperty', 'MotivatedByGoal', 'ObstructedBy', 'Desires', 'CreatedBy', 'Synonym', 'Antonym', 'DerivedFrom', 'TranslationOf', 'DefinedAs')
 
-relations = ('RelatedTo', 'IsA', 'PartOf', 'HasA', 'UsedFor', 'CapableOf')
+relations = ('RelatedTo', 'IsA', 'PartOf', 'HasA', 'UsedFor', 'CapableOf', 'Causes', 'AtLocation')
 
 
 def related_to_sentence(concept, subject, person=None):
@@ -65,6 +65,12 @@ def capable_of_sentence(concept, subject, person=None):
         sentence = person + ' could tell the ' + concept + ' could cause a ' + subject + "."
     return sentence
 
+def at_location_sentence(concept, subject, person=None):
+    if person is None:
+        sentence = "Sometimes " + concept + " were located at " + subject + "."
+    else:
+        sentence = person + ' remembered seeing ' + concept + " at " + subject + "."
+    return sentence
 
 def generate_concept_sentence(person, concept, relation):
     pass
@@ -76,8 +82,10 @@ def prep_part(part):
 
 def generate_concept_sentence(person, concept):
     concept_relations = conceptnet_searcher.get_concept_relations(concept)
+    if len(concept_relations) == 0:
+        return ""
     relation = ""
-    while not relation in relations:
+    while relation not in relations:
         concept_relation = random.choice(concept_relations)
         relation = concept_relation[0]
         subject = concept_relation[1]
@@ -97,6 +105,8 @@ def generate_concept_sentence(person, concept):
         sentence = capable_of_sentence(concept_part, subject_part, person)
     elif relation == 'Causes':
         sentence = capable_of_sentence(concept_part, subject_part, person)
+    elif relation == 'AtLocation':
+        sentence = at_location_sentence(concept_part, subject_part, person)
     return sentence
 
 if __name__ == '__main__':

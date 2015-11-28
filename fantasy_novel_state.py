@@ -3,6 +3,7 @@ from wordtools import wordLists
 from setting import Setting
 from says_sentence import says_sentence
 from npc import Npc
+from wordtools import old_language_generator
 import random
 words = wordLists.WordLists()
 
@@ -14,12 +15,22 @@ class FantasyNovelState:
 
         self.setting_map = []
         self.setting_map_location = 0
-        for i in range(30):
+        for i in range(325):
             self.setting_map.append(Setting())
 
-        self.food = random.randint(0, 12)
-        self.energy = random.randint(0, 12)
+        self.food = random.randint(6, 12)
+        self.energy = random.randint(6, 20)
         self.enemy_patrols = []
+
+        self.wizard_name = old_language_generator.random_word().title() + " The " + words.get_living_thing_adj().title()
+
+        self.macguffin_name = "The " + words.get_adj().title() + " " + words.get_fantasy_prop().title()
+
+        self.goal_setting_name = "The " + words.get_place_adj().title() + random.choice([" Volcano", " Chasm", " Geyser" " Abyss"])
+
+
+    def get_enemy_patrols(self):
+        return self.enemy_patrols
 
     def get_characters(self):
         return self.characters
@@ -55,6 +66,28 @@ class FantasyNovelState:
     def add_enemy_patrol(self, race):
         new_enemies = [Npc(race), Npc(race)]
         self.enemy_patrols.append(new_enemies)
+
+    def generate_injury_sentence(self, c):
+        if len(c.get_injuries()) > 0:
+            injury = random.choice(c.get_injuries())
+            return says_sentence(c, 'My ' + injury.get_description() + ' hurts')
+        else:
+            return self.get_current_setting().mood_sentence()
+
+    def generate_enemy_sentence(self, c):
+        followed_sentences = ['I just heard something move',
+                              "I think we are being followed",
+                              "I have a bad feeling",
+                              "I saw something move",
+                              "I thought I saw something over there"]
+        not_followed_sentences = ["It's so peaceful here",
+                                  "It is so quiet",
+                                  "I think we're alone",
+                                  "It's very quiet here"]
+        if len(self.enemy_patrols) > 0:
+            return says_sentence(c, random.choice(followed_sentences))
+        else:
+            return says_sentence(c, random.choice(not_followed_sentences))
 
     def generate_food_sentence(self, c):
         high_food_sentences = ['We have a lot of food',
@@ -115,7 +148,11 @@ class FantasyNovelState:
             return says_sentence(c, random.choice(no_energy_sentences))
 
     def generate_status_sentence(self):
-        sentence_to_gen = random.choice([self.generate_food_sentence, self.generate_energy_sentence])
+        sentence_to_gen = random.choice([self.generate_food_sentence,
+                                         self.generate_energy_sentence,
+                                         self.generate_enemy_sentence,
+                                         self.generate_injury_sentence])
+
         return sentence_to_gen(random.choice(self.characters))
 
     def add_food(self, food):
@@ -135,3 +172,6 @@ class FantasyNovelState:
             elif i == len(cs) - 2:
                 sentence += ', and '
         return sentence
+
+    def dequeue_enemy_patrol(self):
+        return self.enemy_patrols.pop(0)

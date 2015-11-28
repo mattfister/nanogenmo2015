@@ -2,7 +2,9 @@ from wordtools import names
 from wordtools import wordLists
 import random
 from weapon import Weapon
-
+from injury import Injury
+from wordtools import md_writer
+from wordtools import aOrAn
 names = names.Names()
 words = wordLists.WordLists()
 
@@ -19,7 +21,7 @@ class Npc:
             self.possessive_pronoun = 'his'
             self.pronoun = 'he'
 
-        self.full_name = names.get(random.choice(["male", "female"]))
+        self.full_name = names.get(self.gender)
 
         self.first_name = self.full_name.split(' ')[0]
         if len(self.full_name.split(' ')[0]) > 1:
@@ -32,21 +34,25 @@ class Npc:
 
         self.weapon = Weapon()
 
+        self.injuries = []
+
+        self.dead = False
+
     def generate_characteristic(self):
-        racial_characteristics = {'elf': ['pierced pointed ears', 'flowing white robe', 'beautiful circlet',
-                                          'unusual gait', 'glowing blue eyes', 'magical aura'],
-                                  'orc': ['scarred green skin', 'muscular physique', 'leather harness',
-                                          'dreadful teeth', 'bloodstained shirt', 'tangled, greasy hair'],
+        racial_characteristics = {'elf': ['pierced pointed ear', 'flowing white robe', 'beautiful circlet',
+                                          'unusual gait', 'magical aura'],
+                                  'orc': ['scarred green face', 'muscular physique', 'leather harness',
+                                          'missing tooth', 'bloodstained shirt', 'tangled, greasy mop of hair'],
                                   'dwarf': ['drunken demeanor', 'rotund appearance', 'long beige beard',
                                             'curled mustache', 'golden crown', 'silver amulet', 'flagon of ale'],
-                                  'golem': ['brassy sheen', 'silver plating', 'stone face', 'hideous carved runes',
-                                            'blackened limbs', 'jerky movements'],
-                                  'kobold': ['barking cough', 'tattered gown', 'tiny teeth', 'third eye',
-                                             'sharpened claws', 'small cap', 'nervous movements'],
-                                  'gnome': ['clockwork eyeball', 'pointy hat', 'bulbous nose', 'disgusting acne',
+                                  'golem': ['brassy sheen', 'silver sheen', 'stone face', 'hideous carved rune',
+                                            'blackened limb', 'jerky disposition'],
+                                  'kobold': ['barking cough', 'tattered gown', 'yappy voice' 'third eye',
+                                             'sharpened claw', 'small cap', 'nervous way of moving'],
+                                  'gnome': ['clockwork eyeball', 'pointy hat', 'bulbous nose', 'disgusting pimple',
                                             'insightful gaze']}
-        generic_characteristics = ['burly chest', 'asthmatic wheeze', 'hirsute arms', 'angry grimace', 'gray hair',
-                                   'puppy dog eyes', 'sickly pate', 'dusty clothes', 'soft face']
+        generic_characteristics = ['burly chest', 'asthmatic wheeze', 'hirsute arm', 'angry grimace', 'gray hair',
+                                   'kind face', 'sickly pate', 'dusty burlap shirt', 'soft face']
 
         possible_characteristics = generic_characteristics
         if self.race in racial_characteristics.keys():
@@ -61,6 +67,28 @@ class Npc:
         said_word = random.choice(['announced', 'mentioned', 'uttered', 'stated',
                                    'exclaimed', 'proclaimed', 'cried out'])
         return self.get_description() + " " + said_word + ', "' + subject + '."'
+
+    def add_injury(self, cause):
+        if len(self.injuries) < 1:
+            self.injuries.append(Injury(self, cause))
+        else:
+            self.dead = True
+            if cause != None:
+                md_writer.print_chapter_sentence(cause.get_description().title() + " struck " + self.get_description() + " killing " + self.possessive_pronoun + ".")
+            else:
+                md_writer.print_chapter_sentence(self.get_description().title() + " died.")
+
+    def get_weapon(self):
+        return self.weapon
+
+    def is_dead(self):
+        return self.dead
+
+    def get_pronoun(self):
+        return self.pronoun
+
+    def get_possessive_pronoun(self):
+        return self.possessive_pronoun
 
 if __name__ == '__main__':
     npc = Npc(words.get_fantasy_race())

@@ -125,4 +125,5 @@ class FoodParagraph(Paragraph):
             if random.random() < 0.5:
                 c.set_negative_quality()
 
+        self.state.add_food(food)
 
